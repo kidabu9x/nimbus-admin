@@ -1,0 +1,7 @@
+export const GET_QUIZZES = "GET_QUIZZES";
+export const QUIZZES_LOADING = "QUIZZES_LOADING";
+export const GET_QUIZ = "GET_QUIZ";
+export const QUIZ_LOADING = "QUIZ_LOADING";
+export const QUIZ_CREATING = "QUIZ_CREATING";
+export const QUIZ_UPDATING = "QUIZ_UPDATING";
+export const QUIZ_DELETING = "QUIZ_DELETING";
