@@ -9,7 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const styles = makeStyles(theme => ({
   button: {
-    maxWidth: 90,
     padding: 0,
     paddingBottom: theme.spacing(1),
     opacity: 0.5,

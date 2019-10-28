@@ -24,6 +24,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SchoolIcon from "@material-ui/icons/School";
 import HomeIcon from "@material-ui/icons/Home";
 import CodeIcon from "@material-ui/icons/Code";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 
 const drawerWidth = 240;
 
@@ -134,6 +135,17 @@ class Layout extends Component {
               <CodeIcon />
             </ListItemIcon>
             <ListItemText primary={"Mã trắc nghiệm"} />
+          </ListItem>
+          <ListItem
+            button
+            component={Link}
+            to="/thanh-vien"
+            selected={"/thanh-vien" === pathName}
+          >
+            <ListItemIcon>
+              <SupervisorAccountIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Thành viên"} />
           </ListItem>
         </List>
       </Fragment>

@@ -1,8 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+// Layout
 import Layout from "./Layout";
+
+// Components
+import Homepage from "./Components/Homepage";
 import Courses from "./Components/Courses";
 import Course from "./Components/Course";
 import CourseEdit from "./Components/CourseEdit";
@@ -11,51 +15,106 @@ import CourseQuizQuestions from "./Components/CourseQuizQuestions";
 import CourseQuizQuestionNew from "./Components/CourseQuizQuestionNew";
 import CourseQuizQuestion from "./Components/CourseQuizQuestion";
 import CourseNew from "./Components/CourseNew";
+import Members from "./Components/Members";
+import Login from "./Components/Login";
+import Forbidden from "./Components/Forbidden";
 
+// Global classes
 import Notification from "./Components/Common/classes/Notification";
+import Protected from "./Components/Common/classes/Protected";
 
+// Redux
 import store from "./Components/Store";
 
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
+      <Fragment>
         <Router>
-          <Layout>
-            <Switch>
-              <Route exact path="/" render={() => <div>Trang chủ</div>}></Route>
-              <Route exact path="/khoa-hoc">
-                <Courses />
-              </Route>
-              <Route exact path="/khoa-hoc/:id">
-                <Course />
-              </Route>
-              <Route exact path="/khoa-hoc/:id/chinh-sua">
-                <CourseEdit />
-              </Route>
-              <Route exact path="/khoa-hoc/:id/trac-nghiem">
-                <CourseQuizzes />
-              </Route>
-              <Route exact path="/khoa-hoc/:id/trac-nghiem/:quiz_id/bo-cau-hoi">
-                <CourseQuizQuestions />
-              </Route>
-              <Route exact path="/khoa-hoc/:id/trac-nghiem/:quiz_id/bo-cau-hoi/tao-cau-hoi">
-                <CourseQuizQuestionNew />
-              </Route>
-              <Route exact path="/khoa-hoc/:id/trac-nghiem/:quiz_id/bo-cau-hoi/:question_id">
-                <CourseQuizQuestion />
-              </Route>
-              <Route exact path="/khoa-hoc-moi">
-                <CourseNew />
-              </Route>
-            </Switch>
-          </Layout>
+          <Switch>
+            <Route
+              exact
+              path="/dang-nhap"
+              render={() => <Login />}
+            />
+            <Route
+              exact
+              path="/403"
+              render={() => <Forbidden />}
+            />
+
+            <Protected>
+              <Layout>
+                <Route
+                  exact
+                  path="/"
+                  render={() => <Homepage />}
+                />
+                <Route
+                  exact
+                  path="/khoa-hoc"
+                  render={() => <Courses />}
+                />
+                <Route
+                  exact
+                  path="/khoa-hoc/khoa-hoc-moi"
+                  render={() => <CourseNew />}
+                />
+                <Route
+                  exact
+                  path="/khoa-hoc/:id"
+                  render={() => <Course />}
+                />
+                <Route
+                  exact
+                  path="/khoa-hoc/:id/chinh-sua"
+                  render={() => <CourseEdit />}
+                />
+                <Route
+                  exact
+                  path="/khoa-hoc/:id/trac-nghiem"
+                  render={() => <CourseQuizzes />}
+                />
+                <Route
+                  exact
+                  path="/khoa-hoc/:id/trac-nghiem/:quiz_id/bo-cau-hoi"
+                  render={() => <CourseQuizQuestions />}
+                />
+                <Route
+                  exact
+                  path="/khoa-hoc/:id/trac-nghiem/:quiz_id/bo-cau-hoi/:question_id"
+                  render={() => <CourseQuizQuestion />}
+                />
+                <Route
+                  exact
+                  path="/khoa-hoc/:id/trac-nghiem/:quiz_id/bo-cau-hoi/tao-cau-hoi"
+                  render={() => <CourseQuizQuestionNew />}
+                />
+
+                <Route
+                  exact
+                  path="/thanh-vien"
+                  render={() => <Members />}
+                />
+              </Layout>
+            </Protected>
+          </Switch>
         </Router>
 
         <Notification />
-      </Provider>
+      </Fragment>
     );
   }
 }
 
-export default App;
+class Root extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <App />
+      </Provider>
+    )
+  }
+}
+
+export default Root;

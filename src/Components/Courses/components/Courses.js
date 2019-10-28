@@ -38,7 +38,7 @@ export default function Courses(props) {
   const { courses } = props;
   const classes = useStyles();
   return (
-    <Grid container>
+    <Grid container spacing={2}>
       {courses.map((course, index) => (
         <Grid key={index} item xs={12} sm={6} md={3}>
           <Link to={`/khoa-hoc/${course.slug}`}>
