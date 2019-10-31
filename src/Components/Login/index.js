@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 
 import Header from "./Header";
 import Body from "./Body";
@@ -9,30 +8,26 @@ import Footer from "./Footer";
 import { authGoogle } from "../Store/Auth/Actions";
 
 const mapStateToProps = state => ({
-  authorizing: state.auth.authorizing,
-})
+  authorizing: state.auth.authorizing
+});
 
 const mapDispatchToProps = {
   authGoogle
-}
+};
 
 class Login extends Component {
-
-  onGoogleAuth = async (token) => {
-    const { authGoogle, history } = this.props;
+  onGoogleAuth = async token => {
+    const { authGoogle } = this.props;
     await authGoogle(token);
-    history.push("/");
-  }
+    window.location.href = "/";
+  };
 
   render() {
     const { authorizing } = this.props;
     return (
       <div>
         <Header />
-        <Body
-          loading={authorizing}
-          onGoogleAuth={this.onGoogleAuth}
-        />
+        <Body loading={authorizing} onGoogleAuth={this.onGoogleAuth} />
         <Footer />
       </div>
     );
@@ -42,4 +37,4 @@ class Login extends Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Login));
+)(Login);
