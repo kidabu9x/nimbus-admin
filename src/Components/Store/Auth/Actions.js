@@ -4,12 +4,13 @@ import {
   USER_LOADING,
   AUTHORIZING,
   AUTHORIZED,
-  AUTH_ERROR
+  AUTH_ERROR,
+  LOGOUT
 } from "./ActionTypes";
 
 const apiUrl = "/auth";
 
-export const authGoogle = gToken => async (dispatch) => {
+export const authGoogle = gToken => async dispatch => {
   dispatch({
     type: AUTHORIZING
   });
@@ -26,16 +27,14 @@ export const authGoogle = gToken => async (dispatch) => {
         }
       });
     }
-
   } catch (error) {
     dispatch({
       type: AUTH_ERROR
     });
   }
-
 };
 
-export const auth = () => async (dispatch) => {
+export const auth = () => async dispatch => {
   dispatch({
     type: USER_LOADING
   });
@@ -56,5 +55,18 @@ export const auth = () => async (dispatch) => {
     dispatch({
       type: AUTH_ERROR
     });
+  }
+};
+
+export const logout = opts => dispatch => {
+  dispatch({
+    type: LOGOUT
+  });
+
+  opts = opts || {};
+  if (typeof opts.reload !== "boolean") opts.reload = true;
+
+  if (opts.reload) {
+    window.location.reload();
   }
 };

@@ -1,0 +1,23 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+        "react-app",
+        "eslint:recommended",
+        "plugin:prettier/recommended"
+    ],
+    "env": {
+        "es6": true,
+        "browser": false,
+        "node": true
+    },
+    "globals": {
+        "localStorage": true,
+        "fetch": true,
+        "window": true
+    },
+    "rules": {
+        "prettier/prettier": "error",
+        "semi": ["error", "always"],
+        "quotes": ["error", "double"]
+    }
+}

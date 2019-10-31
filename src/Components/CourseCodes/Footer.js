@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,25 +12,21 @@ const styles = makeStyles(theme => ({
   }
 }));
 
-const NewQuestionLink = forwardRef((props, ref) => (
-  <Link innerRef={ref} {...props} />
+const NewCodeLink = forwardRef((props, ref) => (
+  <Link innerRef={ref} to="/ma-trac-nghiem/ma-trac-nghiem-moi" {...props} />
 ));
 
-const Footer = props => {
-  const currentPath = props.location.pathname;
-  const nextPath = currentPath + "/tao-cau-hoi";
+export default function Footer() {
   const classes = styles();
   return (
     <Fab
       color="secondary"
       aria-label="add"
       className={classes.fab}
-      component={NewQuestionLink}
-      to={nextPath}
+      href="/khoa-hoc-moi"
+      component={NewCodeLink}
     >
       <AddIcon />
     </Fab>
   );
-};
-
-export default withRouter(Footer);
+}

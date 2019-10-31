@@ -128,6 +128,18 @@ class QuizEdit extends Component {
         <Collapse in={showAdvance} timeout="auto" unmountOnExit>
           <CardContent className={classes.content}>
             <TextField
+              required
+              id="maximum_number_of_questions"
+              name="maximum_number_of_questions"
+              label="Số câu hỏi tối đa"
+              value={quiz.maximum_number_of_questions}
+              margin="normal"
+              variant="outlined"
+              type="number"
+              fullWidth
+              onChange={this.onChange}
+            />
+            <TextField
               id="time_limit"
               name="time_limit"
               type="number"

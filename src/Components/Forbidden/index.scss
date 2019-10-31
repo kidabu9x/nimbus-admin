@@ -1,33 +1,44 @@
-$red: #CF352C;
-$dark-red: #9C0502;
-$light-beige: #F3F2EE;
-$beige: #EEE8E0;
-$dark-beige: #DAD2C9;
-$black: #1D2528;
-$gray: #38434A;
-$lighter-gray: #49555B;
-$white: #FFF;
-$bouncer-skin: #FFB482;
-$pole: #F5AE4E;
-$pole-shadow: #DF9D41;
+$red: #cf352c;
+$dark-red: #9c0502;
+$light-beige: #f3f2ee;
+$beige: #eee8e0;
+$dark-beige: #dad2c9;
+$black: #1d2528;
+$gray: #38434a;
+$lighter-gray: #49555b;
+$white: #fff;
+$bouncer-skin: #ffb482;
+$pole: #f5ae4e;
+$pole-shadow: #df9d41;
 
-html, body {
+$bottom-spacing: 40%;
+
+html,
+body {
   width: 100%;
   height: 100vh;
   margin: 0;
   padding: 0;
-  font-family: 'Limelight', cursive;
+  font-family: "Limelight", cursive;
   color: $gray;
+}
+
+.button {
+  position: absolute;
+  left: 50%;
+  bottom: 30%;
+  width: 207px;
+  transform: translateX(-50%);
 }
 
 .background {
   position: absolute;
   left: 50%;
-  bottom: 30%;
+  bottom: $bottom-spacing;
   transform: translateX(-50%);
   &::before {
     display: block;
-    content: '';
+    content: "";
     position: absolute;
     top: -100px;
     left: 50%;
@@ -40,7 +51,7 @@ html, body {
   }
   &::after {
     display: block;
-    content: '';
+    content: "";
     position: absolute;
     top: -150px;
     left: 50%;
@@ -67,7 +78,7 @@ html, body {
   text-shadow: 0 2px $pole;
   &::before {
     display: block;
-    content: '';
+    content: "";
     position: absolute;
     top: 70px;
     right: 5px;
@@ -78,7 +89,7 @@ html, body {
   }
   &::after {
     display: block;
-    content: '';
+    content: "";
     position: absolute;
     top: 74px;
     right: 9px;
@@ -92,11 +103,11 @@ html, body {
 .rug {
   width: 90px;
   border-bottom: 60px solid $red;
-	border-left: 25px solid transparent;
-	border-right: 25px solid transparent;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
   &::before {
     display: block;
-    content: '';
+    content: "";
     position: relative;
     width: 100%;
     height: 5px;
@@ -107,8 +118,8 @@ html, body {
 .foreground {
   position: absolute;
   left: 50%;
-  bottom: 30%;
-  transform: translateX(-50%);  
+  bottom: $bottom-spacing;
+  transform: translateX(-50%);
 }
 
 .bouncer {
@@ -127,13 +138,13 @@ html, body {
     border-top-right-radius: 15px;
     &::before {
       display: block;
-      content: '';
+      content: "";
       position: absolute;
       right: 0;
       bottom: 0;
       width: 27.5px;
       height: 20px;
-      background: rgba(0,0,0,.1);
+      background: rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       border-top-left-radius: 15px;
       border-bottom-right-radius: 7.5px;
@@ -148,15 +159,15 @@ html, body {
       z-index: 5;
       &::before {
         display: block;
-        content: '';
+        content: "";
         position: absolute;
         top: 7.5px;
         right: 0;
         width: 0px;
         height: 0px;
         border-left: 7.5px solid transparent;
-        border-right: 7.5px solid rgba(0, 0, 0, .3);
-        border-top: 2px solid rgba(0, 0, 0, .3);
+        border-right: 7.5px solid rgba(0, 0, 0, 0.3);
+        border-top: 2px solid rgba(0, 0, 0, 0.3);
         border-bottom: 2px solid transparent;
       }
     }
@@ -175,13 +186,13 @@ html, body {
       }
       &::before {
         display: block;
-        content: '';
+        content: "";
         position: relative;
         bottom: 4px;
         right: 2.5px;
         width: 7.5px;
         height: 2.5px;
-        background: rgba(0, 0, 0, .3);
+        background: rgba(0, 0, 0, 0.3);
         border-radius: 2.5px;
         transition: bottom 5s;
       }
@@ -196,7 +207,7 @@ html, body {
       border-radius: 50%;
       &::before {
         display: block;
-        content: '';
+        content: "";
         position: relative;
         top: 2.5px;
         left: 2.5px;
@@ -207,7 +218,7 @@ html, body {
       }
       &::after {
         display: block;
-        content: '';
+        content: "";
         position: relative;
         top: -1.5px;
         left: 5px;
@@ -231,7 +242,7 @@ html, body {
     border-top-left-radius: 7.5px;
     &::before {
       display: block;
-      content: '';
+      content: "";
       position: relative;
       top: 2.5px;
       width: 52px;
@@ -241,7 +252,7 @@ html, body {
     }
     &::after {
       display: block;
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       width: 37.5px;
@@ -269,7 +280,7 @@ html, body {
     transition: transform 1s;
     &::before {
       display: block;
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0;
       width: 30px;
@@ -299,7 +310,7 @@ html, body {
     }
     &::before {
       display: block;
-      content: '';
+      content: "";
       position: absolute;
       top: -5px;
       left: 50%;
@@ -312,7 +323,7 @@ html, body {
     }
     &::after {
       display: block;
-      content: '';
+      content: "";
       position: absolute;
       top: 10px;
       left: 50%;

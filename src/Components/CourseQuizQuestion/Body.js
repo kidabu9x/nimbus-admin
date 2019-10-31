@@ -10,25 +10,18 @@ class Body extends Component {
       updating,
       onSave,
       deleting,
-      onDelete,
-      updateQuestionField,
-      addNewAnswer,
-      removeAnswer
+      onDelete
     } = this.props;
     if (!course || !quiz || !question) return null;
     return (
       <Fragment>
         <Form
-          question={question}
+          initValue={question}
           updating={updating}
           onSave={onSave}
           deleting={deleting}
           onDelete={onDelete}
-          updateQuestionField={updateQuestionField}
-          addNewAnswer={addNewAnswer}
-          removeAnswer={removeAnswer}
         />
-
       </Fragment>
     );
   }

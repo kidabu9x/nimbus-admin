@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { compose } from "recompose";
+import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import {
   AppBar,
@@ -25,8 +26,42 @@ import SchoolIcon from "@material-ui/icons/School";
 import HomeIcon from "@material-ui/icons/Home";
 import CodeIcon from "@material-ui/icons/Code";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import LogoutIcon from "@material-ui/icons/PowerSettingsNew";
+
+import { logout } from "../Components/Store/Auth/Actions";
+
+const mapStateToProps = state => ({});
+const mapDispatchToProps = { logout };
 
 const drawerWidth = 240;
+const navItems = [
+  {
+    title: "Trang chủ",
+    to: "/",
+    icon: "home"
+  },
+  {
+    title: "Khóa học",
+    to: "/khoa-hoc",
+    icon: "school"
+  },
+  {
+    title: "Mã trắc nghiệm",
+    to: "/ma-trac-nghiem",
+    icon: "code"
+  },
+  {
+    title: "Thành viên",
+    to: "/thanh-vien",
+    icon: "account"
+  }
+];
+const navIcons = {
+  home: HomeIcon,
+  school: SchoolIcon,
+  code: CodeIcon,
+  account: SupervisorAccountIcon
+};
 
 const customTheme = createMuiTheme({
   palette: {
@@ -85,6 +120,19 @@ const styles = theme => ({
   }
 });
 
+const NavItem = props => {
+  const { icon, to, title, pathName } = props;
+  const Icon = navIcons[icon];
+  return (
+    <ListItem button component={Link} to={to} selected={to === pathName}>
+      <ListItemIcon>
+        <Icon />
+      </ListItemIcon>
+      <ListItemText primary={title} />
+    </ListItem>
+  );
+};
+
 class Layout extends Component {
   state = {
     mobileOpen: false
@@ -95,12 +143,8 @@ class Layout extends Component {
   };
 
   render() {
-    const {
-      container,
-      location: { pathName },
-      children,
-      classes
-    } = this.props;
+    const { container, location, children, classes, logout } = this.props;
+    const pathName = location.pathname;
     const { mobileOpen } = this.state;
 
     const drawer = (
@@ -108,46 +152,23 @@ class Layout extends Component {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          <ListItem button component={Link} to="/" selected={"/" === pathName}>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Trang chủ"} />
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to="/khoa-hoc"
-            selected={"/khoa-hoc" === pathName}
-          >
-            <ListItemIcon>
-              <SchoolIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Khóa học"} />
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to="/ma-trac-nghiem"
-            selected={"/ma-trac-nghiem" === pathName}
-          >
-            <ListItemIcon>
-              <CodeIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Mã trắc nghiệm"} />
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to="/thanh-vien"
-            selected={"/thanh-vien" === pathName}
-          >
-            <ListItemIcon>
-              <SupervisorAccountIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Thành viên"} />
-          </ListItem>
+          {navItems.map(item => (
+            <NavItem
+              key={item.to}
+              to={item.to}
+              title={item.title}
+              icon={item.icon}
+              pathName={pathName}
+            />
+          ))}
         </List>
+        <Divider />
+        <ListItem button onClick={() => logout()}>
+          <ListItemIcon>
+            <LogoutIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Đăng xuất"} />
+        </ListItem>
       </Fragment>
     );
 
@@ -214,4 +235,9 @@ class Layout extends Component {
 export default compose(
   withRouter,
   withStyles(styles)
-)(Layout);
+)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Layout)
+);

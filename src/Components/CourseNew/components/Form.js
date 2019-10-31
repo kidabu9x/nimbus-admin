@@ -131,7 +131,7 @@ export default function Form(props) {
       {uploadingImg ? <LinearProgress color="secondary" /> : null}
       <img src={course.thumbnail} alt={course.title} />
 
-      {!creating ?
+      {!creating ? (
         <Button
           className={classes.submitButton}
           variant="contained"
@@ -142,9 +142,9 @@ export default function Form(props) {
         >
           Tạo khóa học
         </Button>
-        :
+      ) : (
         <CircularProgress className={classes.submitButton} color="primary" />
-      }
+      )}
     </form>
   );
 }

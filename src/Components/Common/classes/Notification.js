@@ -88,10 +88,9 @@ SnackbarContentWrapper.propTypes = {
 };
 
 class Notify extends Component {
-
   handleClose = () => {
     this.props.closeNotification();
-  }
+  };
 
   render() {
     let { open, variant, message, duration } = this.props;

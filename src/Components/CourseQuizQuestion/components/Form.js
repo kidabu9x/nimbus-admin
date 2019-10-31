@@ -1,222 +1,178 @@
 import React, { Fragment } from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from "@material-ui/core/styles";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
-import DeleteIcon from '@material-ui/icons/Delete';
-
+import FormAnswers from "./FormAnswers";
+import FormActions from "./FormActions";
+import FormSubmitButton from "./FormSubmitButton";
+import FormDeleteButton from "./FormDeleteButton";
 import FormAdvanceDialog from "./FormAdvanceDialog";
 import FormDeleteDialog from "./FormDeleteDialog";
 
 const styles = makeStyles(theme => ({
-    container: {
-        padding: theme.spacing(2),
-        backgroundColor: "#fff",
-        borderRadius: "2px"
-    },
-    textarea: {
-        fontSize: "12px",
-        width: "100%",
-        border: "1px solid rgba(0, 0, 0, 0.1)",
-        padding: "5px",
-        borderRadius: "2px",
-        "&:hover, &:focus": {
-            border: "1px solid rgba(0, 0, 0, 0.3)",
-            outline: "none"
-        }
-    },
-    answerContainer: {
-        marginTop: theme.spacing(1),
-        width: "100%",
-        display: "flex",
-        flexWrap: "wrap",
-        boxSizing: "border-box",
-    },
-    answerCheckbox: {
-        width: "42px"
-    },
-    answerDeleteButton: {
-        width: "44px"
-    },
-    answerTextarea: {
-        flex: 1
-    },
-    submitButton: {
-        margin: "0 auto",
-        marginTop: theme.spacing(2),
-    },
-    actionContainer: {
-        marginTop: theme.spacing(3)
-    },
-    action: {
-        textTransform: "none"
-    },
-    actionRight: {
-        float: "right",
-        color: theme.palette.text.hint
-    },
+  container: {
+    padding: theme.spacing(2),
+    backgroundColor: "#fff",
+    borderRadius: "2px"
+  },
+  textarea: {
+    fontSize: "12px",
+    width: "100%",
+    border: "1px solid rgba(0, 0, 0, 0.1)",
+    padding: "5px",
+    borderRadius: "2px",
+    "&:hover, &:focus": {
+      border: "1px solid rgba(0, 0, 0, 0.3)",
+      outline: "none"
+    }
+  }
 }));
 
-const Form = (props) => {
-    const {
-        question,
-        updating,
-        deleting,
-        onSave,
-        onDelete,
-        updateQuestionField,
-        addNewAnswer,
-        removeAnswer
-    } = props;
-    const classes = styles();
-    const [openAdvance, setOpenAdvance] = React.useState(false);
-    const [openDelete, setOpenDelete] = React.useState(false);
+const answerSchema = {
+  id: null,
+  answer: "",
+  description: "",
+  is_correct: false
+};
 
-    const onChange = (event) => {
-        updateQuestionField({
-            [event.target.name]: event.target.value
-        });
-    }
+const questionSchema = {
+  question: "",
+  answers: [answerSchema],
+  pairing_answers: [answerSchema],
+  description: "",
+  appearance: "random",
+  type: "multiple_choices",
+  enable_shuffle_answers: true
+};
 
-    const updateAnswer = (field, value, index) => {
-        question.answers[index] = {
-            ...question.answers[index],
-            [field]: value
-        }
-        updateQuestionField({
-            answers: question.answers
-        });
-    }
+const Form = props => {
+  const { initValue, updating, deleting, onSave, onDelete } = props;
+  const classes = styles();
+  const [openAdvance, setOpenAdvance] = React.useState(false);
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const [question, setQuestion] = React.useState({
+    ...questionSchema
+  });
 
-    const openAdvanceDialog = () => {
-        setOpenAdvance(true);
-    }
+  React.useEffect(() => {
+    setQuestion(
+      {
+        ...initValue
+      },
+      [initValue]
+    );
+  }, [initValue]);
 
-    const closeAdvanceDialog = () => {
-        setOpenAdvance(false);
-    }
+  const addAnswer = () => {
+    question.answers.push({
+      ...answerSchema
+    });
+    question.pairing_answers.push({
+      ...answerSchema
+    });
+    setQuestion({
+      ...question
+    });
+  };
 
-    const openDeleteDialog = () => {
-        setOpenDelete(true);
-    }
+  const removeAnswer = index => {
+    question.answers.splice(index, 1);
+    question.pairing_answers.splice(index, 1);
+    setQuestion({
+      ...question
+    });
+  };
 
-    const closeDeleteDialog = () => {
-        setOpenDelete(false);
-    }
+  const updateQuestion = event => {
+    question[event.target.name] = event.target.value;
+    setQuestion({
+      ...question
+    });
+  };
 
-    return (
-        <Fragment>
-            <div className={classes.container}>
-                <TextareaAutosize
-                    className={classes.textarea}
-                    value={question.question}
-                    aria-label="input question"
-                    rows={5}
-                    placeholder="(*) Nhập câu hỏi..."
-                    name="question"
-                    onChange={onChange}
-                />
-                {question.answers.map((answer, index) => (
-                    <div className={classes.answerContainer} key={index}>
-                        <Checkbox
-                            className={classes.answerCheckbox}
-                            checked={answer.is_correct}
-                            name="is_correct"
-                            color="primary"
-                            inputProps={{
-                                'aria-label': 'primary checkbox',
-                            }}
-                            onChange={e => updateAnswer(e.target.name, e.target.checked, index)}
-                        />
-                        <TextareaAutosize
-                            className={`${classes.answerTextarea} ${classes.textarea}`}
-                            aria-label="input question"
-                            rows={3}
-                            placeholder="(*) Nhập câu trả lời..."
-                            value={answer.answer}
-                            name="answer"
-                            onChange={e => updateAnswer(e.target.name, e.target.value, index)}
-                        />
-                        <IconButton
-                            className={classes.answerDeleteButton}
-                            aria-label="delete"
-                            disabled={question.answers.length === 1}
-                            onClick={() => removeAnswer(index)}
-                        >
-                            <DeleteIcon fontSize="small" />
-                        </IconButton>
-                    </div>
-                ))}
+  const updateAnswer = (index, answer) => {
+    question.answers[index] = {
+      ...question.answers[index],
+      ...answer
+    };
+    setQuestion({
+      ...question
+    });
+  };
 
-                <div className={classes.actionContainer}>
-                    <Button
-                        className={classes.action}
-                        color="secondary"
-                        size="small"
-                        onClick={addNewAnswer}
-                    >
-                        Thêm câu trả lời
-                    </Button>
-                    <Button
-                        className={`${classes.action} ${classes.actionRight}`}
-                        color="secondary"
-                        size="small"
-                        onClick={openAdvanceDialog}
-                    >
-                        Nâng cao
-                    </Button>
-                </div>
-            </div>
+  const updatePairingAnswer = (index, answer) => {
+    question.pairing_answers[index] = {
+      ...question.pairing_answers[index],
+      ...answer
+    };
+    setQuestion({
+      ...question
+    });
+  };
 
-            <FormAdvanceDialog
-                open={openAdvance}
-                question={question}
-                updateQuestionField={updateQuestionField}
-                handleClose={closeAdvanceDialog}
-            />
+  const onSubmit = () => {
+    onSave(question);
+  };
 
-            <FormDeleteDialog
-                loading={deleting}
-                open={openDelete}
-                handleClose={closeDeleteDialog}
-                handleConfirm={onDelete}
-            />
+  const toggleAdvance = () => {
+    setOpenAdvance(!openAdvance);
+  };
+  const toggleDelete = () => {
+    setOpenDelete(!openDelete);
+  };
 
-            {!updating ?
-                <Button
-                    className={classes.submitButton}
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    fullWidth
-                    onClick={onSave}
-                    disabled={deleting}
-                >
-                    Lưu câu hỏi
-                </Button>
-                :
-                <CircularProgress className={classes.submitButton} color="primary" />
-            }
+  return (
+    <Fragment>
+      <div className={classes.container}>
+        <TextareaAutosize
+          className={classes.textarea}
+          value={question.question}
+          aria-label="input question"
+          rows={5}
+          placeholder="(*) Nhập câu hỏi..."
+          name="question"
+          onChange={updateQuestion}
+        />
+        <FormAnswers
+          question={question}
+          updateAnswer={updateAnswer}
+          updatePairingAnswer={updatePairingAnswer}
+          removeAnswer={removeAnswer}
+        />
 
-            {!deleting ?
-                <Button
-                    className={classes.submitButton}
-                    variant="text"
-                    size="small"
-                    fullWidth
-                    disabled={updating}
-                    onClick={openDeleteDialog}
-                >
-                    Xoá câu hỏi
-                </Button>
-                :
-                <CircularProgress className={classes.submitButton} color="secondary" size={20} />
-            }
-        </Fragment>
-    )
-}
+        <FormActions
+          addAnswer={addAnswer}
+          toggleAdvance={toggleAdvance}
+          disabled={updating || deleting}
+        />
+      </div>
+
+      <FormSubmitButton
+        loading={updating}
+        disabled={deleting}
+        onClick={onSubmit}
+      />
+      <FormDeleteButton
+        loading={deleting}
+        disabled={updating}
+        onClick={toggleDelete}
+      />
+
+      <FormAdvanceDialog
+        open={openAdvance}
+        question={question}
+        updateQuestion={updateQuestion}
+        handleClose={toggleAdvance}
+      />
+
+      <FormDeleteDialog
+        loading={deleting}
+        open={openDelete}
+        handleClose={toggleDelete}
+        handleConfirm={onDelete}
+      />
+    </Fragment>
+  );
+};
 
 export default Form;

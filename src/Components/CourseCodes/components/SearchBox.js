@@ -28,9 +28,13 @@ export default function CustomizedInputBase(props) {
   const { search, handleSearchChange } = props;
   const [temp, setTemp] = useState(search);
 
-  const onSearch = e => {
-    e.preventDefault();
+  const onSearch = () => {
     handleSearchChange(temp);
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    onSearch();
   };
 
   useEffect(() => {
@@ -43,12 +47,12 @@ export default function CustomizedInputBase(props) {
         className={classes.form}
         noValidate
         autoComplete="off"
-        onSubmit={onSearch}
+        onSubmit={onSubmit}
       >
         <InputBase
           value={temp}
           className={classes.input}
-          placeholder="Tìm câu hỏi"
+          placeholder="Tìm kiếm bằng tên lớp"
           inputProps={{ "aria-label": "Tìm câu hỏi" }}
           onChange={e => setTemp(e.target.value)}
         />
@@ -56,6 +60,7 @@ export default function CustomizedInputBase(props) {
           className={classes.iconButton}
           aria-label="search"
           type="submit"
+          onClick={onSearch}
         >
           <SearchIcon />
         </IconButton>

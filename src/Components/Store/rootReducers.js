@@ -4,6 +4,7 @@ import courses from "./Courses/Reducer";
 import course from "./Course/Reducer";
 import courseQuizzes from "./CourseQuizzes/Reducer";
 import courseQuizQuestions from "./CourseQuizQuestions/Reducer";
+import courseCodes from "./CourseCodes/Reducer";
 import notifications from "./Notifications/Reducer";
 import members from "./Members/Reducer";
 
@@ -13,6 +14,7 @@ export default combineReducers({
   course,
   courseQuizzes,
   courseQuizQuestions,
+  courseCodes,
   notifications,
   members
 });

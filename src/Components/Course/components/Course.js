@@ -69,23 +69,19 @@ export default function Course(props) {
   const { course } = props;
   const classes = styles();
   return (
-    <Box overflow="hidden" clone>
-      <Box width="100%" marginRight={0.5} marginBottom={4}>
-        <Paper className={classes.items}>
-          <Grid container spacing={2}>
-            {items.map((item, index) => (
-              <Grid key={index} item xs={4}>
-                <Item
-                  classes={classes}
-                  icon={item.icon}
-                  title={item.title}
-                  to={`/khoa-hoc/${course.slug}/${item.to}`}
-                />
-              </Grid>
-            ))}
+    <Paper className={classes.items}>
+      <Grid container spacing={2}>
+        {items.map((item, index) => (
+          <Grid key={index} item xs={6}>
+            <Item
+              classes={classes}
+              icon={item.icon}
+              title={item.title}
+              to={`/khoa-hoc/${course.slug}/${item.to}`}
+            />
           </Grid>
-        </Paper>
-      </Box>
-    </Box>
+        ))}
+      </Grid>
+    </Paper>
   );
 }

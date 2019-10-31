@@ -29,19 +29,13 @@ export default function Body(props) {
   const labelDisplayedRows = ({ page }) => {
     const maxPage = Math.ceil(count / limit);
     return `${page + 1}/${maxPage}`;
-  }
-  if (!course || !quiz || loading || questions.length === 0) return <Skeleton />
+  };
+  if (!course || !quiz || loading) return <Skeleton />;
   return (
     <Fragment>
-      <SearchBox
-        search={search}
-        handleSearchChange={handleSearchChange}
-      />
-      <Questions
-        questions={questions}
-        search={search}
-      />
-      {count > limit ?
+      <SearchBox search={search} handleSearchChange={handleSearchChange} />
+      <Questions questions={questions} search={search} />
+      {count > limit ? (
         <Pagination
           className={classes.pagination}
           component="div"
@@ -51,9 +45,8 @@ export default function Body(props) {
           rowsPerPageOptions={[]}
           labelDisplayedRows={labelDisplayedRows}
           onChangePage={(e, newPage) => handlePageChange(newPage + 1)}
-        /> : null
-      }
-
+        />
+      ) : null}
     </Fragment>
   );
 }

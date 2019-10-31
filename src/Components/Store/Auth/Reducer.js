@@ -3,7 +3,8 @@ import {
   USER_LOADED,
   AUTHORIZING,
   AUTHORIZED,
-  AUTH_ERROR
+  AUTH_ERROR,
+  LOGOUT
 } from "./ActionTypes";
 
 const initState = {
@@ -14,14 +15,14 @@ const initState = {
   token: localStorage.getItem("token")
 };
 
-export default function (state = initState, action) {
+export default function(state = initState, action) {
   switch (action.type) {
     case USER_LOADED:
-      const { user } = action.payload;
       return {
         ...state,
-        user: user,
-        isAuthenticated: user && user.role === "admin",
+        user: action.payload.user,
+        isAuthenticated:
+          action.payload.user && action.payload.user.role === "admin",
         loading: false
       };
     case USER_LOADING:
@@ -35,15 +36,14 @@ export default function (state = initState, action) {
         authorizing: true
       };
     case AUTHORIZED:
-      const { token } = action.payload;
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
-        token: token,
+        token: action.payload.token,
         authorizing: false
       };
     case AUTH_ERROR:
-      // localStorage.removeItem("token");
+      localStorage.removeItem("token");
       return {
         ...state,
         token: null,
@@ -52,6 +52,17 @@ export default function (state = initState, action) {
         loading: false,
         user: null
       };
+    case LOGOUT: {
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        token: null,
+        authorizing: false,
+        isAuthenticated: false,
+        loading: false,
+        user: null
+      };
+    }
     default:
       return state;
   }

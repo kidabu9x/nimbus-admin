@@ -65,7 +65,8 @@ class NewQuiz extends Component {
       title: "Kiểm tra",
       enable_shuffle_questions: true,
       time_limit: 0,
-      ask_questions_again_when_returning: false
+      ask_questions_again_when_returning: false,
+      maximum_number_of_questions: 40
     },
     showAdvance: false
   };
@@ -135,6 +136,18 @@ class NewQuiz extends Component {
         </CardContent>
         <Collapse in={showAdvance} timeout="auto" unmountOnExit>
           <CardContent className={classes.content}>
+            <TextField
+              required
+              id="maximum_number_of_questions"
+              name="maximum_number_of_questions"
+              label="Số câu hỏi tối đa"
+              value={quiz.maximum_number_of_questions}
+              margin="normal"
+              variant="outlined"
+              type="number"
+              fullWidth
+              onChange={this.onChange}
+            />
             <TextField
               id="time_limit"
               name="time_limit"

@@ -143,7 +143,7 @@ export default function Form(props) {
       {uploadingImg ? <LinearProgress color="secondary" /> : null}
       <img src={course.thumbnail} alt={course.title} />
 
-      {!updating ?
+      {!updating ? (
         <Button
           className={classes.submitButton}
           variant="contained"
@@ -155,11 +155,11 @@ export default function Form(props) {
         >
           Cập nhật
         </Button>
-        :
+      ) : (
         <CircularProgress className={classes.submitButton} color="primary" />
-      }
+      )}
 
-      {!deleting ?
+      {!deleting ? (
         <Button
           className={classes.submitButton}
           variant="text"
@@ -170,9 +170,13 @@ export default function Form(props) {
         >
           Xóa khóa học
         </Button>
-        :
-        <CircularProgress className={classes.submitButton} color="secondary" size={20} />
-      }
+      ) : (
+        <CircularProgress
+          className={classes.submitButton}
+          color="secondary"
+          size={20}
+        />
+      )}
 
       <DeleteDialog
         open={confirmDelete}

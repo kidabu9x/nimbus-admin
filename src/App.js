@@ -15,6 +15,8 @@ import CourseQuizQuestions from "./Components/CourseQuizQuestions";
 import CourseQuizQuestionNew from "./Components/CourseQuizQuestionNew";
 import CourseQuizQuestion from "./Components/CourseQuizQuestion";
 import CourseNew from "./Components/CourseNew";
+import CourseCodes from "./Components/CourseCodes";
+import CourseCodeNew from "./Components/CourseCodeNew";
 import Members from "./Components/Members";
 import Login from "./Components/Login";
 import Forbidden from "./Components/Forbidden";
@@ -32,39 +34,21 @@ class App extends Component {
       <Fragment>
         <Router>
           <Switch>
-            <Route
-              exact
-              path="/dang-nhap"
-              render={() => <Login />}
-            />
-            <Route
-              exact
-              path="/403"
-              render={() => <Forbidden />}
-            />
+            <Route exact path="/dang-nhap" render={() => <Login />} />
+            <Route exact path="/403" render={() => <Forbidden />} />
+          </Switch>
 
-            <Protected>
-              <Layout>
-                <Route
-                  exact
-                  path="/"
-                  render={() => <Homepage />}
-                />
-                <Route
-                  exact
-                  path="/khoa-hoc"
-                  render={() => <Courses />}
-                />
+          <Protected>
+            <Layout>
+              <Switch>
+                <Route exact path="/" render={() => <Homepage />} />
+                <Route exact path="/khoa-hoc" render={() => <Courses />} />
                 <Route
                   exact
                   path="/khoa-hoc/khoa-hoc-moi"
                   render={() => <CourseNew />}
                 />
-                <Route
-                  exact
-                  path="/khoa-hoc/:id"
-                  render={() => <Course />}
-                />
+                <Route exact path="/khoa-hoc/:id" render={() => <Course />} />
                 <Route
                   exact
                   path="/khoa-hoc/:id/chinh-sua"
@@ -75,6 +59,7 @@ class App extends Component {
                   path="/khoa-hoc/:id/trac-nghiem"
                   render={() => <CourseQuizzes />}
                 />
+
                 <Route
                   exact
                   path="/khoa-hoc/:id/trac-nghiem/:quiz_id/bo-cau-hoi"
@@ -82,23 +67,28 @@ class App extends Component {
                 />
                 <Route
                   exact
-                  path="/khoa-hoc/:id/trac-nghiem/:quiz_id/bo-cau-hoi/:question_id"
-                  render={() => <CourseQuizQuestion />}
-                />
-                <Route
-                  exact
                   path="/khoa-hoc/:id/trac-nghiem/:quiz_id/bo-cau-hoi/tao-cau-hoi"
                   render={() => <CourseQuizQuestionNew />}
                 />
-
                 <Route
                   exact
-                  path="/thanh-vien"
-                  render={() => <Members />}
+                  path="/khoa-hoc/:id/trac-nghiem/:quiz_id/bo-cau-hoi/:question_id"
+                  render={() => <CourseQuizQuestion />}
                 />
-              </Layout>
-            </Protected>
-          </Switch>
+                <Route exact path="/thanh-vien" render={() => <Members />} />
+                <Route
+                  exact
+                  path="/ma-trac-nghiem"
+                  render={() => <CourseCodes />}
+                />
+                <Route
+                  exact
+                  path="/ma-trac-nghiem/ma-trac-nghiem-moi"
+                  render={() => <CourseCodeNew />}
+                />
+              </Switch>
+            </Layout>
+          </Protected>
         </Router>
 
         <Notification />
@@ -113,7 +103,7 @@ class Root extends Component {
       <Provider store={store}>
         <App />
       </Provider>
-    )
+    );
   }
 }
 
